@@ -14,7 +14,7 @@ body {
   margin: auto;
 }
 .main-container__background-section {
-  background-image: url(../images/bg-main-mobile.png);
+  background-image: url(./images/bg-main-mobile.png);
   width: 100%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -31,7 +31,7 @@ body {
   }
   .main-container__background-section {
     background-size: contain;
-    background-image: url(../images/bg-main-desktop.png);
+    background-image: url(./images/bg-main-desktop.png);
     width: 900px;
     height: 900px;
   }
@@ -42,7 +42,7 @@ body {
   height: 160px;
   color: hsl(0, 0%, 100%);
   padding: 20px;
-  background-image: url("../images/bg-card-front.png");
+  background-image: url("./images/bg-card-front.png");
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
@@ -97,7 +97,7 @@ body {
   height: 160px;
   color: hsl(0, 0%, 100%);
   padding: 20px;
-  background-image: url("../images/bg-card-back.png");
+  background-image: url("./images/bg-card-back.png");
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
