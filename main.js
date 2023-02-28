@@ -22,19 +22,12 @@ let yearCard = document.querySelector('.card_year')
 let yearInput = document.querySelector('#cardyear');
 let yearErrorDiv = document.querySelector('.form__input--yy--error')
 
- //CVC
+//CVC
 
- let cvcCard = document.querySelector('.backcard__cvc')
- let cvcInput = document.querySelector('#cardcvc')
- let cvcErrorDiv = document.querySelector ('.form__input--cc--error')
+let cvcCard = document.querySelector('.backcard__cvc')
+let cvcInput = document.querySelector('#cardcvc')
+let cvcErrorDiv = document.querySelector ('.form__input--cc--error')
 
- //Thanks section
-
- let thanksSection = document.querySelector('.thanks-section');
-
- //forumulario div
-
- let formDiv = document.querySelector('.form');
 
 //Ingreso dinamico del nombre
 nameInput.addEventListener("input", ()=>{
@@ -76,7 +69,10 @@ numberInput.addEventListener('input', event=>{
 //ingreso dinamico del mes
 
 monthInput.addEventListener('input', ()=>{
+
     monthCard.innerText = monthInput.value;
+    
+
 })
 
 
@@ -91,9 +87,20 @@ cvcInput.addEventListener('input', ()=>{
     cvcCard.innerText = cvcInput.value;
 })
 
-//Boton confirm
+// Secciones Formulario y Thanks
+let formSection = document.querySelector('.form');
+let thanksSection = document.querySelector('.thanks-section');
 
+//Boton confirm
 let confirmBtn = document.querySelector('.form__submit')
+
+let nameValidation = false;
+let numberValidation = false;
+let monthValidation = false;
+let yearValidation = false;
+let cvcValidation = false;
+
+
 confirmBtn.addEventListener('click', event=>{
     
     event.preventDefault();
@@ -102,38 +109,77 @@ confirmBtn.addEventListener('click', event=>{
     //validar name
     verifyisFilled(nameInput, nameErrorDiv);
     //validar number
-    verifyisFilled(numberInput, numberErrorDiv);
+    if(verifyisFilled(numberInput, numberErrorDiv) == true){
+        if(numberInput.value.length == 19){
+            showError(numberInput, numberErrorDiv, ' ', false);
+        } else {
+            showError(numberInput, numberErrorDiv, 'Wrong number');
+        }
+    }
 
     // Validar mes
     verifyisFilled(monthInput, monthErrorDiv)
 
     //validar año
-    verifyisFilled(yearInput, yearErrorDiv);
+    if(verifyisFilled(yearInput, yearErrorDiv)){
+        if(parseInt(yearInput.value)> 22 && parseInt(yearInput.value)<= 27){
+            showError(yearInput, yearErrorDiv, '', false);
+            yearValidation = true;
+        }else{
+            showError(yearInput, yearErrorDiv, 'Wrong Year');
+            yearValidation = false;
+        }
+    }
+    
+    
     //validar cvc
-    verifyisFilled(cvcInput, cvcErrorDiv);
+    if(verifyisFilled(cvcInput, cvcErrorDiv)){
+        if(cvcInput.value.length == 3 ){
+            showError(cvcInput, cvcErrorDiv, '', false);
+            cvcValidation = true;
+        }else{
+            showError(cvcInput, cvcErrorDiv, 'Wrong CVC');
+            cvcValidation = false;
+        }
+    }
+
+    if(nameValidation == true && numberValidation == true && monthValidation == true  && yearValidation == true  && cvcValidation == true){
+        formSection.style.display = 'none';
+        thanksSection.style.display = 'block';
+    }
 })
 
 
 //funciones
-function showError(divInput, divError, msgError){
-    divError.innerText = msgError
-    divInput.style.borderColor = 'hsl(0, 100%, 66%)'
-}
-
-function hideError(divInput, divError){
-    divError.innerText = "";
-    divInput.style.borderColor = 'hsl(270, 3%, 87%)';
+function showError(divInput, divError, msgError, show = true){
+    if(show){
+        divError.innerText = msgError;
+        divInput.style.borderColor = '#FF0000';
+    }else{
+        divError.innerText = msgError;
+        divInput.style.borderColor = 'hsl(270, 3%, 87%)';
+    }
 }
 
 function verifyisFilled(divInput, divError){
 
     if(divInput.value.length > 0){
         showError(divInput, divError, "", false);
-        divInput.style.borderColor = 'hsl(270, 3%, 87%)';
+
     } else {
         showError(divInput, divError, "cant't be blank")
     }
 
+}
+
+function validateLetters(input, divError){
+    // Validando que haya una letra,
+    let regExp = /[A-z]/g;
+    if(regExp.test(input.value)){
+        showError(input, divError, 'Wrong format, numbers only');
+    }else{
+        showError(input, divError, '', false);
+    }
 }
 
 
